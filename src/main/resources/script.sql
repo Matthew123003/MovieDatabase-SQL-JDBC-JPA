@@ -32,3 +32,5 @@ Missing this dependency to access the H2 Servlet
 - DELETE FROM movies WHERE rating = 'R';
 
 PART 2
+
+

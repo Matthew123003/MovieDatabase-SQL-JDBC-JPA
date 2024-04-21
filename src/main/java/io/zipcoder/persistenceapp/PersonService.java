@@ -1,4 +1,4 @@
 package io.zipcoder.persistenceapp;
 
-public class PersonService {
+public interface PersonService {
 }

@@ -1,0 +1,35 @@
+In the context of JPA (Java Persistence API) and entities, persistence refers
+to the ability to store and retrieve Java objects (entities) in a relational database.
+
+Here's a breakdown:
+
+Java Persistence API (JPA): JPA is a Java specification for managing relational
+ data in Java applications. It provides a set of interfaces and annotations for
+ mapping Java objects to relational database tables and vice versa. JPA implementations,
+  such as Hibernate, EclipseLink, or OpenJPA, provide concrete implementations of these
+   specifications.
+Entities: In JPA, an entity is a Java class that represents a table in a relational
+database. Each instance of an entity class corresponds to a row in the database table.
+ Entities typically have fields that represent columns in the database table, and they
+  are annotated with JPA annotations to specify how they are mapped to the database schema.
+Persistence: Persistence, in the context of JPA, refers to the ability to persist (store)
+ entity objects to a database and retrieve them back. JPA provides mechanisms for performing
+  CRUD (Create, Read, Update, Delete) operations on entities, allowing developers to
+  interact with the database using Java objects rather than writing SQL queries directly.
+Persistence Context: The persistence context is a concept in JPA that represents the
+collection of all managed entity instances that are currently associated with a particular
+JPA EntityManager. The persistence context manages the state of these entities, tracks
+changes made to them, and ensures that these changes are synchronized with the database
+when necessary.
+Entity Manager: The EntityManager is the primary interface through which JPA provides
+access to the persistence context and allows developers to interact with entities. It
+provides methods for persisting, querying, updating, and deleting entities, as well as
+managing transactions and caching.
+Overall, persistence in the context of JPA enables Java developers to work with
+relational databases using object-oriented paradigms, allowing for more natural and
+intuitive data access and manipulation.
+
+
+
+
+

@@ -29,6 +29,13 @@ Overall, persistence in the context of JPA enables Java developers to work with
 relational databases using object-oriented paradigms, allowing for more natural and
 intuitive data access and manipulation.
 
+THIS IS THE DEPENDENCY FOR H2 SERVLET ACCESS
+<dependency>
+    <groupId>javax.xml.bind</groupId>
+    <artifactId>jaxb-api</artifactId>
+    <version>2.3.1</version> <!-- Or any other version compatible with your project -->
+</dependency>
+
 
 
 

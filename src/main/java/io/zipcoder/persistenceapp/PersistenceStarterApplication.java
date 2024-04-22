@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 @SpringBootApplication
-public class PersistenceStarterApplication implements CommandLineRunner {
+public class PersistenceStarterApplication {
 
 	@Bean
 	ServletRegistrationBean h2servletRegistration(){
@@ -20,17 +20,9 @@ public class PersistenceStarterApplication implements CommandLineRunner {
 		return registrationBean;
 	}
 
-	@Bean
-	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-		return new JdbcTemplate(dataSource);
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(PersistenceStarterApplication.class, args);
 	}
 
-	@Override
-	public void run(String... strings) throws Exception {
 
-	}
 }

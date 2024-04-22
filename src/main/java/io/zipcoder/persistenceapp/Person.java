@@ -1,42 +1,52 @@
 package io.zipcoder.persistenceapp;
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-//@Entity
+import javax.persistence.Id;
+import java.util.Date;
+
+@Entity
 public class Person {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String fName;
     private String lName;
-    private String bDate;
+    private Date bDate;
     private String mobileNumber;
+    private Integer homeId;
 
-    public Person(){}
+    public Person(){
+        fName = "Peter";
+        lName = "Parker";
+        bDate = new Date();
+        mobileNumber = "1234567890";
+        homeId = 1;
+    }
 
-    public Person(String fName, String lName, String bDate, String mobileNumber){
+    public Person(String fName, String lName, Date bDate, String mobileNumber, Integer homeId){
         this.fName = fName;
         this.lName = lName;
         this.bDate = bDate;
         this.mobileNumber = mobileNumber;
+        this.homeId = homeId;
     }
 
-    public Person(Integer id, String fName, String lName, String bDate, String mobileNumber){
+    public Person(Long id, String fName, String lName, Date bDate, String mobileNumber, Integer homeId){
         this.id = id;
         this.fName = fName;
         this.lName = lName;
         this.bDate = bDate;
         this.mobileNumber = mobileNumber;
+        this.homeId = homeId;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,11 +66,11 @@ public class Person {
         this.lName = lName;
     }
 
-    public String getBDate() {
+    public Date getBDate() {
         return bDate;
     }
 
-    public void setBDate(String bDate) {
+    public void setBDate(Date bDate) {
         this.bDate = bDate;
     }
 
@@ -70,6 +80,14 @@ public class Person {
 
     public void setMobileNumber(String mobileNumber) {
         this.mobileNumber = mobileNumber;
+    }
+
+    public Integer getHomeId() {
+        return homeId;
+    }
+
+    public void setHomeId(Integer homeId) {
+        this.homeId = homeId;
     }
 
     public String toString(){

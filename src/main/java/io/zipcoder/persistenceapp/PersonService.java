@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PersonService {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public PersonService(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;

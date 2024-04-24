@@ -36,6 +36,54 @@ THIS IS THE DEPENDENCY FOR H2 SERVLET ACCESS
     <version>2.3.1</version> <!-- Or any other version compatible with your project -->
 </dependency>
 
+This code defines a REST controller named PersonController. It handles HTTP requests
+related to managing persons. The controller relies on a PersonService for the underlying
+business logic. The controller provides endpoints for various CRUD operations and additional
+ functionalities related to persons. These functionalities include:
+
+Creating a new person via a POST request to /people.
+Updating an existing person via a PUT request to /people/{id}, where {id} is the ID of the
+person. It returns a 404 error if the person with the specified ID doesn't exist.
+Retrieving a person by ID via a GET request to /people/{id}.
+Deleting a person by ID via a DELETE request to /people/{id}.
+Retrieving all people via a GET request to /people.
+Finding people with a specific mobile number via a GET request to /people/reverselookup/{mobileNumber}.
+Finding people with a specific last name via a GET request to /people/surname/{lastName}.
+Finding people with a specific first name via a GET request to /people/firstname/{firstName}.
+Getting a report of first name frequencies via a GET request to /people/firstname/stats.
+Each endpoint corresponds to a method in the controller annotated with appropriate HTTP method
+ annotations such as @PostMapping, @PutMapping, @GetMapping, and @DeleteMapping. These methods
+  delegate the actual processing to methods in the PersonService and return appropriate
+  ResponseEntity objects with the results.
+
+This code snippet defines a service class named PersonService, responsible for handling
+ business logic related to persons. Here's a detailed explanation of each part:
+
+Class Declaration:
+The PersonService class is annotated with @Service, indicating that it's a Spring service component.
+Constructor and Dependency Injection:
+The class has a constructor that accepts a PersonRepository object, injecting it into the service.
+The @Autowired annotation on the constructor is used for automatic dependency injection, indicating
+ that Spring should provide the PersonRepository bean when creating an instance of PersonService.
+CRUD Operations:
+addPerson: Adds a new person to the database by calling personRepository.save(person).
+updatePerson: Updates an existing person with the specified ID. It retrieves the existing person
+from the repository, updates its fields with the provided person's data, and saves the changes.
+removePerson: Deletes a person from the database by ID using personRepository.delete(id).
+removePeople: Deletes multiple persons from the database using personRepository.delete(personList).
+findAll: Retrieves all persons from the database using personRepository.findAll().
+getByPhoneNumber: Retrieves a person by their mobile phone number by iterating over all persons
+in the repository and comparing phone numbers.
+getById: Retrieves a person by their ID using personRepository.findOne(id).
+getByFirstName and getByLastName: Retrieves persons by their first name and last name respectively,
+ by iterating over all persons in the repository and filtering based on the name criteria.
+getFirstNameStats: Generates statistics of the frequency of occurrence of each first name among
+all persons. It iterates over all persons in the repository, updating a map with the count of
+occurrences for each first name.
+Each method encapsulates specific functionality related to managing persons and interacts with
+the PersonRepository for database operations. The service layer abstracts away the database
+interactions, providing a clean separation between data access and business logic.
+
 
 
 

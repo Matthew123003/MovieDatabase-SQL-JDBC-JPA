@@ -1,88 +1,79 @@
-In the context of JPA (Java Persistence API) and entities, persistence refers
-to the ability to store and retrieve Java objects (entities) in a relational database.
-
-Here's a breakdown:
-
-Java Persistence API (JPA): JPA is a Java specification for managing relational
- data in Java applications. It provides a set of interfaces and annotations for
- mapping Java objects to relational database tables and vice versa. JPA implementations,
-  such as Hibernate, EclipseLink, or OpenJPA, provide concrete implementations of these
-   specifications.
-Entities: In JPA, an entity is a Java class that represents a table in a relational
-database. Each instance of an entity class corresponds to a row in the database table.
- Entities typically have fields that represent columns in the database table, and they
-  are annotated with JPA annotations to specify how they are mapped to the database schema.
-Persistence: Persistence, in the context of JPA, refers to the ability to persist (store)
- entity objects to a database and retrieve them back. JPA provides mechanisms for performing
-  CRUD (Create, Read, Update, Delete) operations on entities, allowing developers to
-  interact with the database using Java objects rather than writing SQL queries directly.
-Persistence Context: The persistence context is a concept in JPA that represents the
-collection of all managed entity instances that are currently associated with a particular
-JPA EntityManager. The persistence context manages the state of these entities, tracks
-changes made to them, and ensures that these changes are synchronized with the database
-when necessary.
-Entity Manager: The EntityManager is the primary interface through which JPA provides
-access to the persistence context and allows developers to interact with entities. It
-provides methods for persisting, querying, updating, and deleting entities, as well as
-managing transactions and caching.
-Overall, persistence in the context of JPA enables Java developers to work with
-relational databases using object-oriented paradigms, allowing for more natural and
-intuitive data access and manipulation.
-
-THIS IS THE DEPENDENCY FOR H2 SERVLET ACCESS
-<dependency>
-    <groupId>javax.xml.bind</groupId>
-    <artifactId>jaxb-api</artifactId>
-    <version>2.3.1</version> <!-- Or any other version compatible with your project -->
-</dependency>
-
-This code defines a REST controller named PersonController. It handles HTTP requests
-related to managing persons. The controller relies on a PersonService for the underlying
-business logic. The controller provides endpoints for various CRUD operations and additional
- functionalities related to persons. These functionalities include:
-
-Creating a new person via a POST request to /people.
-Updating an existing person via a PUT request to /people/{id}, where {id} is the ID of the
-person. It returns a 404 error if the person with the specified ID doesn't exist.
-Retrieving a person by ID via a GET request to /people/{id}.
-Deleting a person by ID via a DELETE request to /people/{id}.
-Retrieving all people via a GET request to /people.
-Finding people with a specific mobile number via a GET request to /people/reverselookup/{mobileNumber}.
-Finding people with a specific last name via a GET request to /people/surname/{lastName}.
-Finding people with a specific first name via a GET request to /people/firstname/{firstName}.
-Getting a report of first name frequencies via a GET request to /people/firstname/stats.
-Each endpoint corresponds to a method in the controller annotated with appropriate HTTP method
- annotations such as @PostMapping, @PutMapping, @GetMapping, and @DeleteMapping. These methods
-  delegate the actual processing to methods in the PersonService and return appropriate
-  ResponseEntity objects with the results.
-
-This code snippet defines a service class named PersonService, responsible for handling
- business logic related to persons. Here's a detailed explanation of each part:
+Class Declaration:
+@RestController: Annotation indicating that this class will handle HTTP requests
+ and return the response as JSON or XML data.
+public class PersonController: Declaration of the class named PersonController.
+Constructor and Dependency Injection:
+private final PersonService personService: Declaration of a final field of type
+PersonService.
+public PersonController(PersonService personService): Constructor for PersonController
+ class, which injects an instance of PersonService into the controller.
+HTTP Methods:
+Create Person (POST):
+@PostMapping("/people"): Annotation specifying that this method handles POST requests to /people.
+public ResponseEntity<Person> createPerson(@RequestBody Person person): Method to create
+a new person. It accepts a Person object in the request body.
+return new ResponseEntity<>(personService.create(person), HttpStatus.OK): Calls the create
+method of personService to create the person and returns a ResponseEntity with the created
+person and HTTP status OK.
+Find Person by ID (GET):
+@GetMapping("/people/{id}"): Annotation specifying that this method handles GET requests to /people/{id}.
+public ResponseEntity<Person> findPersonById(@PathVariable Long id): Method to find a person by their ID.
+return new ResponseEntity<>(personService.findById(id), HttpStatus.OK): Calls the findById
+method of personService to retrieve the person by ID and returns a ResponseEntity with the
+found person and HTTP status OK.
+Find All Persons (GET):
+@GetMapping("/people"): Annotation specifying that this method handles GET requests to /people.
+public ResponseEntity<Iterable<Person>> findAll(): Method to retrieve all persons.
+return new ResponseEntity<>(personService.findAllPersons(), HttpStatus.OK): Calls the
+findAllPersons method of personService to retrieve all persons and returns a ResponseEntity
+with the list of persons and HTTP status OK.
+Update Person (PUT):
+@PutMapping("/people/{id}"): Annotation specifying that this method handles PUT requests to /people/{id}.
+public ResponseEntity<Person> updatePerson(@RequestBody Person person, @PathVariable Long id):
+Method to update a person by their ID. It accepts a Person object in the request body and the
+person's ID as a path variable.
+return new ResponseEntity<>(personService.updatePerson(id, person), HttpStatus.OK): Calls the
+updatePerson method of personService to update the person and returns a ResponseEntity with the
+updated person and HTTP status OK.
+Delete Person (DELETE):
+@DeleteMapping("/people/{id}"): Annotation specifying that this method handles DELETE requests to /people/{id}.
+public ResponseEntity<Boolean> deletePerson(@PathVariable Long id): Method to delete a person by their ID.
+return new ResponseEntity<>(personService.delete(id), HttpStatus.OK): Calls the delete method
+of personService to delete the person and returns a ResponseEntity with a boolean indicating
+success and HTTP status OK.
+These methods define the RESTful endpoints for managing persons, delegating the actual operations
+to corresponding methods in the PersonService class and returning appropriate responses to the client.
 
 Class Declaration:
-The PersonService class is annotated with @Service, indicating that it's a Spring service component.
+@Service: Annotation indicating that this class is a service component in Spring.
 Constructor and Dependency Injection:
-The class has a constructor that accepts a PersonRepository object, injecting it into the service.
-The @Autowired annotation on the constructor is used for automatic dependency injection, indicating
- that Spring should provide the PersonRepository bean when creating an instance of PersonService.
+private final PersonRepository repo: Declaration of a final field named repo of type PersonRepository.
+@Autowired public PersonService(PersonRepository repo): Constructor for the PersonService class,
+which injects an instance of PersonRepository into the service.
 CRUD Operations:
-addPerson: Adds a new person to the database by calling personRepository.save(person).
-updatePerson: Updates an existing person with the specified ID. It retrieves the existing person
-from the repository, updates its fields with the provided person's data, and saves the changes.
-removePerson: Deletes a person from the database by ID using personRepository.delete(id).
-removePeople: Deletes multiple persons from the database using personRepository.delete(personList).
-findAll: Retrieves all persons from the database using personRepository.findAll().
-getByPhoneNumber: Retrieves a person by their mobile phone number by iterating over all persons
-in the repository and comparing phone numbers.
-getById: Retrieves a person by their ID using personRepository.findOne(id).
-getByFirstName and getByLastName: Retrieves persons by their first name and last name respectively,
- by iterating over all persons in the repository and filtering based on the name criteria.
-getFirstNameStats: Generates statistics of the frequency of occurrence of each first name among
-all persons. It iterates over all persons in the repository, updating a map with the count of
-occurrences for each first name.
-Each method encapsulates specific functionality related to managing persons and interacts with
-the PersonRepository for database operations. The service layer abstracts away the database
-interactions, providing a clean separation between data access and business logic.
+Find by ID:
+public Person findById(long id): Method to find a person by their ID.
+return repo.findById(id).orElseThrow(EntityNotFoundException::new): Calls the findById method
+of the repository. If the person is not found, it throws an EntityNotFoundException.
+Find All Persons:
+public Iterable<Person> findAllPersons(): Method to retrieve all persons.
+return repo.findAll(): Calls the findAll method of the repository to retrieve all persons.
+Create:
+public Person create(Person person): Method to create a new person.
+return repo.save(person): Calls the save method of the repository to save the new person.
+Update:
+public Person updatePerson(Long id, Person person): Method to update an existing person.
+Person personToUpdate = repo.findById(id).orElseThrow(EntityNotFoundException::new): Retrieves
+ the existing person from the repository. If the person is not found, it throws an EntityNotFoundException.
+Updates the attributes of the existing person with the attributes of the provided person object.
+return repo.save(personToUpdate): Calls the save method of the repository to save the updated person.
+Delete:
+public boolean delete(Long id): Method to delete a person by their ID.
+repo.deleteById(id): Calls the deleteById method of the repository to delete the person by ID.
+return true: Returns true indicating successful deletion.
+These methods encapsulate the logic for CRUD operations on persons, interacting with the
+PersonRepository for data access. The service layer abstracts away the database interactions,
+ providing a clean separation between data access and business logic.
 
 
 

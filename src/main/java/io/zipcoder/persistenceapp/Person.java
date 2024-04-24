@@ -1,9 +1,6 @@
 package io.zipcoder.persistenceapp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -13,6 +10,7 @@ public class Person {
     private Long id;
     private String fName;
     private String lName;
+    @Column(name = "birthday")
     private Date bDate;
     private String mobileNumber;
     private Integer homeId;

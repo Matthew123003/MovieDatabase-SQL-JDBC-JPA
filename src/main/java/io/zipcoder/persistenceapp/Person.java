@@ -8,11 +8,20 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "first_name")
     private String fName;
+
+    @Column(name = "last_name")
     private String lName;
+
     @Column(name = "birthday")
     private Date bDate;
+
+    @Column(name = "mobile")
     private String mobileNumber;
+
+    @Column(name = "home_id")
     private Integer homeId;
 
     public Person(){

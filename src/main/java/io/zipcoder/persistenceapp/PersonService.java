@@ -6,9 +6,9 @@ import javax.persistence.EntityNotFoundException;
 
 @Service
 public class PersonService {
-
-    private final PersonRepository repo;
     @Autowired
+    private final PersonRepository repo;
+
     public PersonService(PersonRepository repo){
         this.repo = repo;
     }

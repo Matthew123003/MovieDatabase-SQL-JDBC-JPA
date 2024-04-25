@@ -25,10 +25,7 @@ public class PersonService {
     public Person create(Person person) {
         return repo.save(person);
     }
-//    public Iterable<Person> createMultiple(Iterable<Person> people) {
-//        return repo.saveAll(people);
-//    }
-
+    
     //update
     public Person updatePerson(Long id, Person person){
         Person personToUpdate = repo.findById(id).orElseThrow(EntityNotFoundException::new);
